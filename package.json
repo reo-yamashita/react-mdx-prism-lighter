@@ -2,10 +2,10 @@
   "name": "react-mdx-prism-lighter",
   "package_identifier": "react_mdx_code_lighter",
   "version": "1.0.0",
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.js",
+  "module": "dist/index.cjs.js",
+  "main": "dist/index.js",
   "browser": "dist/index.min.js",
-  "types": "./dist/index.d.ts",
+  "types": "index.d.ts",
   "license": "MIT",
   "author": {
     "name": "Near Closer"
@@ -16,6 +16,7 @@
     "prism"
   ],
   "scripts": {
+    "tsc": "tsc",
     "build": "rollup -c"
   },
   "devDependencies": {

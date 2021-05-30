@@ -1,20 +1,23 @@
-import { LineProps } from "@/types/index"
+import { LineProps } from "@/types/index";
 
-let highlightFlag: boolean = false
-export const LinesToHighlight = (lineArray: LineProps[]): boolean => {
-  let flag = false
+let highlightFlag = false;
+export const LinesToHighlight = (lineArray: LineProps[]) => {
+  let flag = false;
+
   lineArray.forEach((line) => {
-    const content = line.content
-    if (/\/\/highlight$/.test(content)) {
-      flag = true
-    } else if (/\/\/highlight-start$/.test(content)) {
-      highlightFlag = true
-    } else if (highlightFlag && /\/\/highlight-end$/.test(content)) {
-      flag = true
-      highlightFlag = false
+    const content = line.content;
+    if (/\/\/highlight(\s*)$/.test(content)) {
+      flag = true;
+    } else if (/\/\/highlight-start(\s*)$/.test(content)) {
+      highlightFlag = true;
+    } else if (highlightFlag && /\/\/highlight-end(\s*)$/.test(content)) {
+      flag = true;
+      highlightFlag = false;
     }
-    line.content = content.replace(/\/\/highlight(.*)/g, "")
-  })
-
-  return highlightFlag || flag
-}
+    line.content = content.replace(
+      /\/\/(highlight(\s*)$|highlight-(start|end)(\s*)$)/g,
+      ""
+    );
+  });
+  return highlightFlag || flag;
+};
