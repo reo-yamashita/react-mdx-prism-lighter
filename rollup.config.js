@@ -1,4 +1,3 @@
-import { terser } from "rollup-plugin-terser";
 import pluginTypescript from "@rollup/plugin-typescript";
 import pluginCommonjs from "@rollup/plugin-commonjs";
 import pluginNodeResolve from "@rollup/plugin-node-resolve";
@@ -20,55 +19,23 @@ const banner = `
 `;
 
 export default [
-  {
-    input: inputFileName,
-    output: [
-      // {
-      //   name: moduleName,
-      //   file: pkg.browser,
-      //   format: "iife",
-      //   sourcemap: "inline",
-      //   banner,
-      // },
-      {
-        name: moduleName,
-        file: pkg.browser,
-        format: "iife",
-        sourcemap: "inline",
-        banner,
-        plugins: [terser()],
-      },
-    ],
-    plugins: [
-      pluginTypescript(),
-      pluginCommonjs({
-        extensions: [".js", ".ts"],
-      }),
-      babel({
-        babelHelpers: "bundled",
-        configFile: path.resolve(__dirname, ".babelrc.js"),
-      }),
-      pluginNodeResolve({
-        browser: true,
-      }),
-    ],
-  },
   //*.d.ts
   {
     input: "src/types/index.d.ts",
-    output: [
-      { file: "dist/index.d.ts", format: "es" },
-      { file: "index.d.ts", format: "es" },
-    ],
+    output: [{ file: "index.d.ts", format: "es" }],
     plugins: [dts()],
   },
   // ES
   {
-    input: `${inputFileName}`,
+    input: {
+      dist: `${inputFileName}`,
+    },
     output: [
       {
-        file: pkg.module,
-        format: "es",
+        dir: "./",
+        entryFileNames: `[name]/index.js`,
+        chunkFileNames: "dist/[name]-[hash].js",
+        format: "esm",
         sourcemap: "inline",
         banner,
         exports: "named",
@@ -95,10 +62,14 @@ export default [
 
   // CommonJS
   {
-    input: `${inputFileName}`,
+    input: {
+      dist: `${inputFileName}`,
+    },
     output: [
       {
-        file: pkg.main,
+        dir: "./",
+        entryFileNames: `[name]/index.cjs.js`,
+        chunkFileNames: "dist/[name]-[hash].cjs.js",
         format: "cjs",
         sourcemap: "inline",
         banner,

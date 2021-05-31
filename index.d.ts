@@ -1,9 +1,3 @@
-interface LineProps {
-  types: string[];
-  content: string;
-  empty?: boolean;
-}
-
 declare module "react-mdx-prism-lighter" {
   function LinesNumberToHighlight(light: string, index: number): boolean;
   /**
@@ -23,5 +17,3 @@ declare module "react-mdx-prism-lighter" {
 
   export { LinesNumberToHighlight, LinesToHighlight };
 }
-
-export { LineProps };

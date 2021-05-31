@@ -1,4 +1,8 @@
-import { LineProps } from "@/types/index";
+interface LineProps {
+  types: string[];
+  content: string;
+  empty?: boolean;
+}
 
 let highlightFlag = false;
 export const LinesToHighlight = (lineArray: LineProps[]) => {
